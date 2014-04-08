@@ -1,0 +1,5 @@
+/Hash-Shave*.tar.gz
+/Hash-Shave*/
+/.build/
+*.sw[po]
+tags
