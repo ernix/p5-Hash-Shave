@@ -2,10 +2,6 @@
 
 Hash::Shave - Shave off a redundant hash
 
-# VERSION
-
-version 0.01
-
 # DESCRIPTION
 
 This package provides __shave__ subroutine to rebuild hash structures.
