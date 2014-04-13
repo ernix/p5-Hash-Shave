@@ -28,7 +28,8 @@ sub shave {
                 };
             }
             my @ar;
-            for (0 .. max(@keys)) {
+            my $max = max(@keys) || 0;
+            for (0 .. $max) {
                 push @ar, sub {
                     return undef unless exists $_obj->{$_};
                     return shave($_obj->{$_});
