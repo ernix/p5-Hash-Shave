@@ -31,7 +31,7 @@ sub shave {
             my $max = max(@keys) || 0;
             for (0 .. $max) {
                 push @ar, sub {
-                    return undef unless exists $_obj->{$_};
+                    return (undef) unless exists $_obj->{$_};
                     return shave($_obj->{$_});
                 }->($_);
             }
@@ -60,11 +60,11 @@ Hash::Shave - Shave off a redundant hash
 
 =head1 DESCRIPTION
 
-This package provides B<shave> subroutine to rebuild hash structures.
+This package provides B<shave> subroutine to simplify hash structures.
 
-I sometimes need to walk through a data structure that it consists only of
-a bunch of nested hashes, even if some of them should be treated as arrays or
-single values.  This module shaves these numbered keys.
+I sometimes want to walk through a data structure that consists only of a bunch
+of nested hashes, even if some of them should be treated as arrays or single
+values.  This module eliminates numbered keys from hashes.
 
 =head1 SYNOPSIS
 
@@ -80,13 +80,27 @@ single values.  This module shaves these numbered keys.
             '0' => 'obviously a single value',
         },
     });
-    print join q{ }, @{$hash->{foo}}, $hash->{bar};
+
+    ##
+    ## $hash now turns to:
+    ##
+    #
+    # +{
+    #     foo => [
+    #         'nested',
+    #         'numbered',
+    #         'hash',
+    #         'structures',
+    #     ],
+    #     bar => 'obviously a single value',
+    # };
+    #
 
 or
 
     use Hash::Shave;
     my $shave = Hash::Shave->new;
-    my $hash = $shave->off($complicated_hash);
+    $shave->off($hash);
 
 =head1 METHODS
 
