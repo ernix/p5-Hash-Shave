@@ -1,5 +1,11 @@
-/Hash-Shave*.tar.gz
-/Hash-Shave*/
 /.build/
 *.sw[po]
 tags
+/Object-Squash-*
+/.build
+/_build_params
+/Build
+/Build.bat
+!Build/
+!META.json
+!LICENSE

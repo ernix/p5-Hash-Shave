@@ -1,0 +1,7 @@
+author = "Shin Kojima <shin@kojima.org>"
+license = "Perl_5"
+name = "Object-Squash"
+readme_from="lib/Object/Squash.pm"
+
+[release]
+do_not_upload_to_cpan=true
