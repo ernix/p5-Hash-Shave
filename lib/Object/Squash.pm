@@ -22,7 +22,7 @@ sub squash {
 
 sub _squash_hash {
     my $obj = shift;
-    return $obj unless ref $obj eq 'HASH';
+    return $obj if ref $obj ne 'HASH';
 
     my @keys = keys %{$obj};
 
@@ -47,7 +47,7 @@ sub _squash_hash {
 
 sub _squash_array {
     my $obj = shift;
-    return $obj unless ref $obj eq 'ARRAY';
+    return $obj if ref $obj ne 'ARRAY';
 
     return (undef) if @{$obj} == 0;
     $obj = squash($obj->[0]) if @{$obj} == 1;
