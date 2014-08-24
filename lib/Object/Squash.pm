@@ -36,10 +36,10 @@ sub _squash_hash {
 
     my @ar;
     for my $i (0 .. $max) {
-        push @ar, sub {
-            return (undef) unless exists $obj->{$i};
-            return squash($obj->{$i});
-        }->();
+        #
+        # Some numbered keys might be partially discreated
+        #
+        push @ar, exists $obj->{$i} ? squash($obj->{$i}) : (undef);
     }
 
     return \@ar;
