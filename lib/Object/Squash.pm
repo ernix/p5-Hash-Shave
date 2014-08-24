@@ -70,6 +70,8 @@ values.  This module removes numbered keys from a hash.
 
 =head1 SYNOPSIS
 
+=head2 C<squash>
+
     use Object::Squash qw(squash);
     my $hash = squash(+{
         foo => +{
