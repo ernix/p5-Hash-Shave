@@ -4,7 +4,7 @@ Object::Squash - Remove numbered keys from a nested object
 
 # DESCRIPTION
 
-This package provides `squash` subroutine to simplify hash/array structures.
+This package provides **squash** subroutine to simplify hash/array structures.
 
 I sometimes want to walk through a data structure that consists only of a bunch
 of nested hashes, even if some of them should be treated as arrays or single
@@ -12,35 +12,32 @@ values.  This module removes numbered keys from a hash.
 
 # SYNOPSIS
 
-## squash
+## `squash`
 
-```perl
-use Object::Squash qw(shave);
-my $hash = shave(+{
-    foo => +{
-        '0' => 'nested',
-        '1' => 'numbered',
-        '2' => 'hash',
-        '3' => 'structures',
-    },
-    bar => +{
-        '0' => 'obviously a single value',
-    },
-});
+    use Object::Squash qw(squash);
+    my $hash = squash(+{
+        foo => +{
+            '0' => 'nested',
+            '1' => 'numbered',
+            '2' => 'hash',
+            '3' => 'structures',
+        },
+        bar => +{
+            '0' => 'obviously a single value',
+        },
+    });
 
 $hash now turns to:
 
-```perl
-+{
-    foo => [
-        'nested',
-        'numbered',
-        'hash',
-        'structures',
-    ],
-    bar => 'obviously a single value',
-};
-```
+    +{
+        foo => [
+            'nested',
+            'numbered',
+            'hash',
+            'structures',
+        ],
+        bar => 'obviously a single value',
+    };
 
 # AUTHOR
 

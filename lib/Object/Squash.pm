@@ -6,6 +6,8 @@ package Object::Squash;
 use parent 'Exporter';
 use List::Util qw/max/;
 
+use version; our $VERSION = version->declare("v0.0.1");
+
 our @EXPORT_OK = qw(squash);
 
 sub squash {
