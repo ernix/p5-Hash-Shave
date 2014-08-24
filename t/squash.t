@@ -2,10 +2,9 @@ use strict;
 use warnings;
 use Test::More;
 
-use_ok 'Hash::Shave' => 'shave';
-my $shave = new_ok 'Hash::Shave';
+use_ok 'Object::Squash' => 'squash';
 
-subtest shave => sub {
+subtest squash => sub {
     my $hash = +{
         code => '200',
         subcode => '0',
@@ -47,7 +46,8 @@ subtest shave => sub {
                 '9'  => 'example.cn',
                 '10' => 'example.tw',
             },
-            empty => +{},
+            empty_array => [],
+            empty_hash => +{},
             nest => +{
                 nest => +{
                     nest => +{
@@ -58,7 +58,7 @@ subtest shave => sub {
         },
     };
 
-    is_deeply shave($hash), +{
+    is_deeply squash($hash), +{
         code => '200',
         subcode => '0',
         result => 'text goes here',
@@ -93,7 +93,8 @@ subtest shave => sub {
                 'example.cn',
                 'example.tw',
             ],
-            empty => undef,
+            empty_array => undef,
+            empty_hash => undef,
             nest => +{
                 nest => +{
                     nest => +{
@@ -103,12 +104,10 @@ subtest shave => sub {
             },
         },
     };
-
-    is_deeply shave($hash), $shave->off($hash);
 };
 
 subtest synopsis => sub {
-    my $hash = shave(+{
+    my $hash = squash(+{
         foo => +{
             '0' => 'nested',
             '1' => 'numbered',
