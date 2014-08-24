@@ -4,7 +4,7 @@ Object::Squash - Remove numbered keys from a nested object
 
 # DESCRIPTION
 
-This package provides B<squash> subroutine to simplify hash/array structures.
+This package provides `squash` subroutine to simplify hash/array structures.
 
 I sometimes want to walk through a data structure that consists only of a bunch
 of nested hashes, even if some of them should be treated as arrays or single
