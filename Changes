@@ -1,5 +1,7 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+
+v0.0.1 2014-08-24T13:21:58Z
     init
 
