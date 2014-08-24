@@ -1,7 +1,5 @@
 Revision history for {{$dist->name}}
 
 {{$NEXT}}
+    init
 
-0.02      2014-08-24 21:54:22+09:00 Asia/Tokyo
-
-0.01      2014-04-13 12:14:36+09:00 Asia/Tokyo
