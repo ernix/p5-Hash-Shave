@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 package Object::Squash;
-# ABSTRACT: Shave off a redundant hash
+# ABSTRACT: Remove numbered keys from a nested object
 
 use parent 'Exporter';
 use List::Util qw/max/;
