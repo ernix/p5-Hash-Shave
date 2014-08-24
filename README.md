@@ -1,19 +1,21 @@
 # NAME
 
-Hash::Shave - Shave off a redundant hash
+Object::Squash - Remove numbered keys from a nested object
 
 # DESCRIPTION
 
-This package provides __shave__ subroutine to rebuild hash structures.
+This package provides B<squash> subroutine to simplify hash/array structures.
 
-I sometimes want to walk through a data structure that it consists only of
-a bunch of nested hashes, even if some of them should be treated as arrays or
-single values.  This module shaves these numbered keys.
+I sometimes want to walk through a data structure that consists only of a bunch
+of nested hashes, even if some of them should be treated as arrays or single
+values.  This module removes numbered keys from a hash.
 
 # SYNOPSIS
 
+## squash
+
 ```perl
-use Hash::Shave qw(shave);
+use Object::Squash qw(shave);
 my $hash = shave(+{
     foo => +{
         '0' => 'nested',
@@ -26,43 +28,19 @@ my $hash = shave(+{
     },
 });
 
-##
-## $hash now turns to:
-##
-#
-# +{
-#     foo => [
-#         'nested',
-#         'numbered',
-#         'hash',
-#         'structures',
-#     ],
-#     bar => 'obviously a single value',
-# };
-#
-```
-
-or
+$hash now turns to:
 
 ```perl
-use Hash::Shave;
-my $shave = Hash::Shave->new;
-$shave->off($hash);
++{
+    foo => [
+        'nested',
+        'numbered',
+        'hash',
+        'structures',
+    ],
+    bar => 'obviously a single value',
+};
 ```
-
-# METHODS
-
-- __new__
-
-    Create Hash::Shave object
-
-- __shave__
-
-    Shave hash object
-
-- __off__
-
-    Shave hash object
 
 # AUTHOR
 
