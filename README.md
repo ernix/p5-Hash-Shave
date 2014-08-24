@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/ernix/p5-Object-Squash.png?branch=master)](https://travis-ci.org/ernix/p5-Object-Squash)
 # NAME
 
 Object::Squash - Remove numbered keys from a nested object
