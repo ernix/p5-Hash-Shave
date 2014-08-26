@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 package Object::Squash;
-# ABSTRACT: Remove numbered keys from a nested object
+# ABSTRACT: Remove numbered keys from a nested hash/array
 
 use parent 'Exporter';
 use List::Util qw/max/;
@@ -49,10 +49,12 @@ sub _squash_array {
     my $obj = shift;
     return $obj if ref $obj ne 'ARRAY';
 
-    return (undef) if @{$obj} == 0;
-    $obj = squash($obj->[0]) if @{$obj} == 1;
+    return (undef)           if @{$obj} == 0;
+    return squash($obj->[0]) if @{$obj} == 1;
 
-    return $obj;
+    my @array = map { squash($_) } @{$obj};
+
+    return \@array;
 }
 
 1;
@@ -60,7 +62,7 @@ __END__
 
 =head1 NAME
 
-Object::Squash - Remove numbered keys from a nested object
+Object::Squash - Remove numbered keys from a nested hash/array
 
 =head1 DESCRIPTION
 
@@ -77,26 +79,57 @@ values.  This module removes numbered keys from a hash.
     use Object::Squash qw(squash);
     my $hash = squash(+{
         foo => +{
-            '0' => 'nested',
-            '1' => 'numbered',
-            '2' => 'hash',
-            '3' => 'structures',
+            '0' => 'numbered',
+            '1' => 'hash',
+            '2' => 'structures',
         },
         bar => +{
             '0' => 'obviously a single value',
         },
+        buz => [
+            +{
+                nest => +{
+                    '0' => 'nested',
+                    '2' => 'discreated',
+                    '3' => 'array',
+                },
+            },
+            +{
+                nest => +{
+                    '0' => 'FOO',
+                    '1' => 'BAR',
+                    '2' => 'BUZ',
+                },
+            },
+        ],
     });
 
 $hash now turns to:
 
     +{
         foo => [
-            'nested',
             'numbered',
             'hash',
             'structures',
         ],
         bar => 'obviously a single value',
+        buz => [
+            +{
+                nest => [
+                    'nested',
+                    undef,
+                    'discreated',
+                    'array',
+                ],
+            },
+            +{
+                nest => [
+                    'FOO',
+                    'BAR',
+                    'BUZ',
+                ],
+            }
+        ],
     };
 
 =head1 AUTHOR

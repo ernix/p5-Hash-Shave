@@ -109,18 +109,56 @@ subtest squash => sub {
 subtest synopsis => sub {
     my $hash = squash(+{
         foo => +{
-            '0' => 'nested',
-            '1' => 'numbered',
-            '2' => 'hash',
-            '3' => 'structures',
+            '0' => 'numbered',
+            '1' => 'hash',
+            '2' => 'structures',
         },
         bar => +{
             '0' => 'obviously a single value',
         },
+        buz => [
+            +{
+                nest => +{
+                    '0' => 'nested',
+                    '2' => 'partial',
+                    '3' => 'array',
+                },
+            },
+            +{
+                nest => +{
+                    '0' => 'FOO',
+                    '1' => 'BAR',
+                    '2' => 'BUZ',
+                },
+            },
+        ],
     });
 
-    is join(q{ }, @{$hash->{foo}}, $hash->{bar}),
-        'nested numbered hash structures obviously a single value';
+    is_deeply $hash, +{
+        foo => [
+            'numbered',
+            'hash',
+            'structures',
+        ],
+        bar => 'obviously a single value',
+        buz => [
+            +{
+                nest => [
+                    'nested',
+                    undef,
+                    'partial',
+                    'array',
+                ],
+            },
+            +{
+                nest => [
+                    'FOO',
+                    'BAR',
+                    'BUZ',
+                ],
+            },
+        ],
+    };
 };
 
 done_testing();
