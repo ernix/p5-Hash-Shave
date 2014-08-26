@@ -1,7 +1,7 @@
 author = "Shin Kojima <shin@kojima.org>"
 license = "Perl_5"
-name = "Object-Squash"
-readme_from="lib/Object/Squash.pm"
+name = "Hash-Squash"
+readme_from="lib/Hash/Squash.pm"
 badges=['travis']
 
 [release]

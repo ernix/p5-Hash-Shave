@@ -12,7 +12,7 @@
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
       "version" : "2"
    },
-   "name" : "Object-Squash",
+   "name" : "Hash-Squash",
    "no_index" : {
       "directory" : [
          "t",
@@ -58,14 +58,14 @@
    "release_status" : "unstable",
    "resources" : {
       "bugtracker" : {
-         "web" : "https://github.com/ernix/p5-Object-Squash/issues"
+         "web" : "https://github.com/ernix/p5-Hash-Squash/issues"
       },
-      "homepage" : "https://github.com/ernix/p5-Object-Squash",
+      "homepage" : "https://github.com/ernix/p5-Hash-Squash",
       "repository" : {
          "type" : "git",
-         "url" : "git://github.com/ernix/p5-Object-Squash.git",
-         "web" : "https://github.com/ernix/p5-Object-Squash"
+         "url" : "git://github.com/ernix/p5-Hash-Squash.git",
+         "web" : "https://github.com/ernix/p5-Hash-Squash"
       }
    },
-   "version" : "v0.0.2"
+   "version" : "v0.0.3"
 }

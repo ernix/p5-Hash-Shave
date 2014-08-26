@@ -1,7 +1,7 @@
-[![Build Status](https://travis-ci.org/ernix/p5-Object-Squash.png?branch=master)](https://travis-ci.org/ernix/p5-Object-Squash)
+[![Build Status](https://travis-ci.org/ernix/p5-Hash-Squash.png?branch=master)](https://travis-ci.org/ernix/p5-Hash-Squash)
 # NAME
 
-Object::Squash - Remove numbered keys from a nested hash/array
+Hash::Squash - Remove numbered keys from a nested hash/array
 
 # DESCRIPTION
 
@@ -15,7 +15,7 @@ values.  This module removes numbered keys from a hash.
 
 ## `squash`
 
-    use Object::Squash qw(squash);
+    use Hash::Squash qw(squash);
     my $hash = squash(+{
         foo => +{
             '0' => 'numbered',
@@ -75,7 +75,7 @@ Turns to:
 
 squash $hash but keep empty hash/array
 
-    use Object::Squash qw(unnumber);
+    use Hash::Squash qw(unnumber);
     my $hash = unnumber(+{
         foo => +{
             '0' => 'numbered',
