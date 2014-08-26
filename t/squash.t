@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Test::More;
 
-use_ok 'Object::Squash' => 'squash', 'unnumber';
+use_ok 'Hash::Squash' => 'squash', 'unnumber';
 
 subtest squash => sub {
     my $hash = +{

@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-package Object::Squash;
+package Hash::Squash;
 # ABSTRACT: Remove numbered keys from a nested hash/array
 
 use parent 'Exporter';
@@ -83,7 +83,7 @@ __END__
 
 =head1 NAME
 
-Object::Squash - Remove numbered keys from a nested hash/array
+Hash::Squash - Remove numbered keys from a nested hash/array
 
 =head1 DESCRIPTION
 
@@ -97,7 +97,7 @@ values.  This module removes numbered keys from a hash.
 
 =head2 C<squash>
 
-    use Object::Squash qw(squash);
+    use Hash::Squash qw(squash);
     my $hash = squash(+{
         foo => +{
             '0' => 'numbered',
@@ -157,7 +157,7 @@ Turns to:
 
 squash $hash but keep empty hash/array
 
-    use Object::Squash qw(unnumber);
+    use Hash::Squash qw(unnumber);
     my $hash = unnumber(+{
         foo => +{
             '0' => 'numbered',
