@@ -6,7 +6,7 @@ package Hash::Squash;
 use parent 'Exporter';
 use List::Util qw/max/;
 
-use version; our $VERSION = version->declare("v0.0.2");
+use version; our $VERSION = version->declare("v0.0.3");
 
 our @EXPORT_OK = qw(squash unnumber);
 
