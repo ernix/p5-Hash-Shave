@@ -5,15 +5,20 @@ Hash::Squash - Remove numbered keys from a nested hash/array
 
 # DESCRIPTION
 
-This package provides **squash** subroutine to simplify hash/array structures.
-
-I sometimes want to walk through a data structure that consists only of a bunch
-of nested hashes, even if some of them should be treated as arrays or single
-values.  This module removes numbered keys from a hash.
+This package provides **squash** and **unnumber** subroutines to simplify
+hash/array structures.
 
 # SYNOPSIS
 
 ## `squash`
+
+**squash** does 3 things to the argument recursively
+
+1\. Remove numbered keys from hashes and map them to arrays
+
+2\. Convert hashes/arrays with single element to single value
+
+3\. Convert empty hashes/arrays to \`undef\`
 
     use Hash::Squash qw(squash);
     my $hash = squash(+{
@@ -73,7 +78,7 @@ Turns to:
 
 ## `unnumber`
 
-squash $hash but keep empty hash/array
+**unnumber** is similar to **squash**, but keep hashes/arrays
 
     use Hash::Squash qw(unnumber);
     my $hash = unnumber(+{
