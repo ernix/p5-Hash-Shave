@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Test::More;
 
-use_ok 'Object::Squash' => 'squash';
+use_ok 'Object::Squash' => 'squash', 'unnumber';
 
 subtest squash => sub {
     my $hash = +{
@@ -103,6 +103,65 @@ subtest squash => sub {
                 },
             },
         },
+    };
+};
+
+subtest unnumber => sub {
+    my $hash = unnumber(+{
+        foo => +{
+            '0' => 'numbered',
+            '1' => 'hash',
+            '2' => 'structures',
+        },
+        bar => +{
+            '0' => 'obviously a single value',
+        },
+        buz => [
+            +{
+                nest => +{
+                    '0' => 'nested',
+                    '2' => 'partial',
+                    '3' => 'array',
+                },
+            },
+        ],
+        empty_hash  => +{},
+        empty_array => [],
+        nest => [
+            nest => [
+                nest => [
+                    undef
+                ],
+            ],
+        ],
+    });
+
+    is_deeply $hash, +{
+        foo => [
+            'numbered',
+            'hash',
+            'structures',
+        ],
+        bar => ['obviously a single value'],
+        buz => [
+            +{
+                nest => [
+                    'nested',
+                    undef,
+                    'partial',
+                    'array',
+                ],
+            },
+        ],
+        empty_hash  => +{},
+        empty_array => [],
+        nest => [
+            nest => [
+                nest => [
+                    undef
+                ],
+            ],
+        ],
     };
 };
 

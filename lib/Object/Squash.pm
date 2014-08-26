@@ -6,30 +6,40 @@ package Object::Squash;
 use parent 'Exporter';
 use List::Util qw/max/;
 
-use version; our $VERSION = version->declare("v0.0.1");
+use version; our $VERSION = version->declare("v0.0.2");
 
-our @EXPORT_OK = qw(squash);
+our @EXPORT_OK = qw(squash unnumber);
 
-sub squash {
-    my $obj = shift;
+sub squash   { _squash(shift) }
+sub unnumber { _squash(shift, { keep_empty => 1 }) }
+
+sub _squash {
+    my ($obj, $arg) = @_;
     return $obj unless ref $obj;
 
-    $obj = _squash_hash($obj);
-    $obj = _squash_array($obj);
+    $obj = _squash_hash($obj, $arg);
+    $obj = _squash_array($obj, $arg);
 
     return $obj;
 }
 
 sub _squash_hash {
-    my $obj = shift;
+    my ($obj, $arg) = @_;
     return $obj if ref $obj ne 'HASH';
+
+    EMPTY_HASH: {
+        last EMPTY_HASH if %{$obj};
+        return (undef) unless exists $arg->{keep_empty};
+        return (undef) unless $arg->{keep_empty};
+        return +{};
+    }
 
     my @keys = keys %{$obj};
 
-    if (grep {/\D/} @keys) {
-        return +{
-            map { $_ => squash($obj->{$_}) } @keys,
-        };
+    CONTAINS_NON_NUMERIC_KEYS: {
+        last CONTAINS_NON_NUMERIC_KEYS unless grep {/\D/} @keys;
+        my %hash = map { $_ => _squash($obj->{$_}, $arg) } @keys;
+        return \%hash;
     }
 
     my $max = max(@keys) || 0;
@@ -39,20 +49,31 @@ sub _squash_hash {
         #
         # Some numbered keys might be partially discreated
         #
-        push @ar, exists $obj->{$i} ? squash($obj->{$i}) : (undef);
+        push @ar, exists $obj->{$i} ? _squash($obj->{$i}, $arg) : (undef);
     }
 
     return \@ar;
 }
 
 sub _squash_array {
-    my $obj = shift;
+    my ($obj, $arg) = @_;
     return $obj if ref $obj ne 'ARRAY';
 
-    return (undef)           if @{$obj} == 0;
-    return squash($obj->[0]) if @{$obj} == 1;
+    my $keep_empty = exists $arg->{keep_empty} ? $arg->{keep_empty} : ();
 
-    my @array = map { squash($_) } @{$obj};
+    EMPTY_ARRAY: {
+        last EMPTY_ARRAY if @{$obj} != 0;
+        return (undef) unless $keep_empty;
+        return [];
+    }
+
+    SINGLE_ELEMENT: {
+        last SINGLE_ELEMENT if @{$obj} != 1;
+        last SINGLE_ELEMENT if $keep_empty;
+        return _squash($obj->[0]);
+    }
+
+    my @array = map { _squash($_, $arg) } @{$obj};
 
     return \@array;
 }
@@ -104,7 +125,7 @@ values.  This module removes numbered keys from a hash.
         ],
     });
 
-$hash now turns to:
+Turns to:
 
     +{
         foo => [
@@ -129,6 +150,52 @@ $hash now turns to:
                     'BUZ',
                 ],
             }
+        ],
+    };
+
+=head2 C<unnumber>
+
+squash $hash but keep empty hash/array
+
+    use Object::Squash qw(unnumber);
+    my $hash = unnumber(+{
+        foo => +{
+            '0' => 'numbered',
+            '1' => 'hash',
+            '2' => 'structures',
+        },
+        bar => +{
+            '0' => 'obviously a single value',
+        },
+        buz => [
+            +{
+                nest => +{
+                    '0' => 'nested',
+                    '2' => 'partial',
+                    '3' => 'array',
+                },
+            },
+        ],
+    });
+
+Turns to:
+
+    +{
+        foo => [
+            'numbered',
+            'hash',
+            'structures',
+        ],
+        bar => ['obviously a single value'],
+        buz => [
+            +{
+                nest => [
+                    'nested',
+                    undef,
+                    'partial',
+                    'array',
+                ],
+            },
         ],
     };
 
