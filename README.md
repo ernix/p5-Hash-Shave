@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.org/ernix/p5-Object-Squash.png?branch=master)](https://travis-ci.org/ernix/p5-Object-Squash)
 # NAME
 
-Object::Squash - Remove numbered keys from a nested object
+Object::Squash - Remove numbered keys from a nested hash/array
 
 # DESCRIPTION
 
@@ -18,26 +18,103 @@ values.  This module removes numbered keys from a hash.
     use Object::Squash qw(squash);
     my $hash = squash(+{
         foo => +{
-            '0' => 'nested',
-            '1' => 'numbered',
-            '2' => 'hash',
-            '3' => 'structures',
+            '0' => 'numbered',
+            '1' => 'hash',
+            '2' => 'structures',
         },
         bar => +{
             '0' => 'obviously a single value',
         },
+        buz => [
+            +{
+                nest => +{
+                    '0' => 'nested',
+                    '2' => 'discreated',
+                    '3' => 'array',
+                },
+            },
+            +{
+                nest => +{
+                    '0' => 'FOO',
+                    '1' => 'BAR',
+                    '2' => 'BUZ',
+                },
+            },
+        ],
     });
 
-$hash now turns to:
+Turns to:
 
     +{
         foo => [
-            'nested',
             'numbered',
             'hash',
             'structures',
         ],
         bar => 'obviously a single value',
+        buz => [
+            +{
+                nest => [
+                    'nested',
+                    undef,
+                    'discreated',
+                    'array',
+                ],
+            },
+            +{
+                nest => [
+                    'FOO',
+                    'BAR',
+                    'BUZ',
+                ],
+            }
+        ],
+    };
+
+## `unnumber`
+
+squash $hash but keep empty hash/array
+
+    use Object::Squash qw(unnumber);
+    my $hash = unnumber(+{
+        foo => +{
+            '0' => 'numbered',
+            '1' => 'hash',
+            '2' => 'structures',
+        },
+        bar => +{
+            '0' => 'obviously a single value',
+        },
+        buz => [
+            +{
+                nest => +{
+                    '0' => 'nested',
+                    '2' => 'partial',
+                    '3' => 'array',
+                },
+            },
+        ],
+    });
+
+Turns to:
+
+    +{
+        foo => [
+            'numbered',
+            'hash',
+            'structures',
+        ],
+        bar => ['obviously a single value'],
+        buz => [
+            +{
+                nest => [
+                    'nested',
+                    undef,
+                    'partial',
+                    'array',
+                ],
+            },
+        ],
     };
 
 # AUTHOR

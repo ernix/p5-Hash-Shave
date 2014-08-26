@@ -1,5 +1,5 @@
 {
-   "abstract" : "Remove numbered keys from a nested object",
+   "abstract" : "Remove numbered keys from a nested hash/array",
    "author" : [
       "Shin Kojima <shin@kojima.org>"
    ],
@@ -67,5 +67,5 @@
          "web" : "https://github.com/ernix/p5-Object-Squash"
       }
    },
-   "version" : "v0.0.1"
+   "version" : "v0.0.2"
 }
